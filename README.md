@@ -10,3 +10,7 @@ This is a small Rust program to show the list of achievements for the game youre
 3. Copy the `example.env` file to `.env` and fill in the Client ID, Client Secret, Steam API key, your Twitch username and your Steam ID
 4. Run the program with `cargo run`
 5. Add a browser source to your streaming software and point it to `http://localhost:${PORT}`
+
+## Example
+https://user-images.githubusercontent.com/31469876/219956563-4ba367ef-8d7b-45ab-bfb2-f5c8b5f492e1.mov
+
