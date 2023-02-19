@@ -14,3 +14,7 @@ This is a small Rust program to show the list of achievements for the game youre
 ## Example
 https://user-images.githubusercontent.com/31469876/219956563-4ba367ef-8d7b-45ab-bfb2-f5c8b5f492e1.mov
 
+## Custom CSS
+
+For custom css, for changing the style you can just put css on the `ul` and `li` tags
+For other components you can add css to `#icon` for the achievement icon, `#text` for all the text, `#name` for the achievement name and `#description` for the achievement description.
