@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Achievements</title>
+    <script src="https://confettijs.org/confetti.min.js"></script>
+</head>
+<body>
+    <div id="confetti"></div>
+    <ul id="list"></ul>
+    <script>
+
+        const list = document.getElementById('list');
+
+        const renderAchievements = (data) => {
+            console.log(data);
+
+            const achievements = data.achievements;
+
+            //render achievements
+            list.innerHTML = '';
+            Object.
+                values(achievements).
+                sort(
+                    (a, b) => b.unlocked - a.unlocked
+                ).
+                forEach(achievement => {
+                    const li = document.createElement('li');
+                    li.id = achievement.name;
+
+                    const img = document.createElement('img');
+                    img.id = 'icon'
+                    img.src = achievement.icon_gray;
+                    if (achievement.unlocked) img.src = achievement.icon;
+                    li.appendChild(img);
+
+                    const text = document.createElement('div');
+                    text.id = 'text';
+
+                    const name = document.createElement('div');
+                    name.id = 'name';
+                    name.innerText = achievement.name;
+                    text.appendChild(name);
+
+                    const desc = document.createElement('div');
+                    desc.id = 'description';
+                    desc.innerText = achievement.description;
+                    text.appendChild(desc);
+
+                    li.appendChild(text);
+                    list.appendChild(li);
+                }
+            );
+        }
+        
+        let confetti = new Confetti('list')
+        confetti.setCount(75);
+        confetti.setSize(1);
+        confetti.setPower(25);
+        confetti.setFade(false);
+        confetti.destroyTarget(false);
+
+        const updateAchievements = (data) => {
+            const achievements = data.achievements;
+
+            //update achievements
+            Object.
+                values(achievements).
+                forEach(achievement => {
+                    const li = document.getElementById(achievement.name);
+                    const img = li.getElementsByTagName('img')[0];
+                    if (achievement.unlocked && img.src != achievement.icon) {
+                        img.src = achievement.icon;
+                        li.click();
+                    }
+                })
+        }
+
+        //request from /update every 10 seconds
+        fetch('/update').then(res => res.json()).then(data => {
+                renderAchievements(data)
+        });
+        setInterval(() => {
+            fetch('/update').then(res => res.json()).then(data => {
+                updateAchievements(data)
+            });
+        }, 10000);
+
+        //rotate achievements
+        setInterval(() => {
+            list.id = 'animate'
+            const first = list.getElementsByTagName('li')[0];
+            list.removeChild(first);
+            list.appendChild(first);
+        }, 4000);
+    </script>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            display: flex;
+            margin: 10px;
+
+            border: 1px solid black;
+            padding: 5px;
+            max-height: 50px;
+            overflow: hidden;
+        }
+
+        ul#animate {
+            animation: rotate 4s ease-in-out infinite;
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+        }
+
+        div#text {
+            margin-left: 10px;
+        }
+
+        div#name {
+            font-weight: bold;
+        }
+
+        div#description {
+            font-size: 0.8em;
+        }
+
+        @keyframes rotate {
+            10% {
+                        transform: translateY(0);
+            }
+            30%, 100% {
+                        transform: translateY(-72px);
+            }
+        }
+    </style>
+</body>
+</html>
