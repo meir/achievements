@@ -39,7 +39,9 @@ impl WebServer {
 
         let app_state = self.appstate.clone();
 
-        rouille::start_server("0.0.0.0:80", move |request| {
+        let address = format!("localhost:{}", self.port);
+
+        rouille::start_server(address, move |request| {
             router!(request,
                 (GET) (/) => {
                     let file = std::fs::read_to_string("index.html").unwrap();

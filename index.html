@@ -88,9 +88,10 @@
             });
         }, 10000);
 
+        list.id = 'animate'
+
         //rotate achievements
         setInterval(() => {
-            list.id = 'animate'
             const first = list.getElementsByTagName('li')[0];
             list.removeChild(first);
             list.appendChild(first);
