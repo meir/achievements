@@ -54,7 +54,26 @@ impl WebServer {
                     Response::text(json)
                 },
 
-                _ => Response::text("404")
+                _ => {
+                    //get the file path from the request
+                    let mut path = request.url().to_string();
+                    println!("Request for file: {}", path);
+                    // check if path is absolute
+                    if path.starts_with("/") {
+                        // remove the first character
+                        path = ".".to_string() + path.as_str();
+                    }
+
+                    if path.contains("..") {
+                        return Response::text("Invalid path").with_status_code(400);
+                    }
+
+                    let file = std::fs::read_to_string(&path).unwrap();
+                    //send as mime type
+
+                    let mime = mime_guess::from_path(&path).first_or_octet_stream();
+                    Response::from_data(mime.to_string(), file)
+                }
             )
         });
     }

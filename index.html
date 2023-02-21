@@ -30,11 +30,14 @@
                     const li = document.createElement('li');
                     li.id = achievement.name;
 
+                    const container = document.createElement('div');
+                    container.id = 'container';
+
                     const img = document.createElement('img');
                     img.id = 'icon'
                     img.src = achievement.icon_gray;
                     if (achievement.unlocked) img.src = achievement.icon;
-                    li.appendChild(img);
+                    container.appendChild(img);
 
                     const text = document.createElement('div');
                     text.id = 'text';
@@ -49,7 +52,8 @@
                     desc.innerText = achievement.description;
                     text.appendChild(desc);
 
-                    li.appendChild(text);
+                    container.appendChild(text);
+                    li.appendChild(container);
                     list.appendChild(li);
                 }
             );
@@ -94,6 +98,9 @@
         setInterval(() => {
             const first = list.getElementsByTagName('li')[0];
             list.removeChild(first);
+            list.style.animation = 'none';
+            list.offsetHeight;
+            list.style.animation = null;
             list.appendChild(first);
         }, 4000);
     </script>
@@ -109,17 +116,21 @@
         }
 
         li {
-            display: flex;
+            height: 60px;
+            max-height: 60px;
             margin: 10px;
-
+            overflow: hidden;
+        }
+        
+        div#container {
+            display: flex;
             border: 1px solid black;
             padding: 5px;
-            max-height: 50px;
             overflow: hidden;
         }
 
         ul#animate {
-            animation: rotate 4s ease-in-out infinite;
+            animation: rotate 4s ease-in-out;
         }
 
         img {
@@ -140,13 +151,14 @@
         }
 
         @keyframes rotate {
-            10% {
+            20% {
                         transform: translateY(0);
             }
-            30%, 100% {
-                        transform: translateY(-72px);
+            80%, 100% {
+                        transform: translateY(-70px);
             }
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="/custom.css">
 </body>
 </html>

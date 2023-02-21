@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 dotenv = "0.15.0"
 http = "0.2.8"
+mime_guess = "2.0.4"
 reqwest = "0.11.14"
 rouille = "3.6.1"
 serde = {version = "1.0.152", features = ["derive"]}
