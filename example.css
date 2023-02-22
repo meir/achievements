@@ -1,0 +1,25 @@
+
+/* #container is an entire achievement block */
+#container {
+
+}
+
+/* #text is the title and the description of the achievement */
+#text {
+
+}
+
+/* #name is the title of the achievement */
+#name {
+
+}
+
+/* #description is the description of the achievement */
+#description {
+
+}
+
+/* #icon is the icon of the achievement, this is either gray or colored depending on if you have achieved it */
+#icon {
+
+}
