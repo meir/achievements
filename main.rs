@@ -36,7 +36,7 @@ fn main() {
     appstate.load_achievements();
     let state = Arc::new(Mutex::new(appstate));
     
-    let mut tray = TrayItem::new("Achievements", "").unwrap();
+    let mut tray = TrayItem::new("Achievements", "achievements-icon").unwrap();
     let refstate = RefCell::new(Arc::clone(&state));
     tray.add_menu_item("Reload", move || {
         let state = refstate.borrow_mut();
@@ -64,8 +64,11 @@ fn main() {
         http.start();
     });
 
+    #[cfg(macos)]
     let inner = tray.inner_mut();
+    #[cfg(macos)]
     inner.display();
+
 }
 
 fn create_env_file() {
