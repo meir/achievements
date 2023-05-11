@@ -2,6 +2,8 @@
 
 This is a small Rust program to show the list of achievements for the game youre currently streaming on Twitch.
 
+I do not recommend you use this, this program was made just to start learning rust
+
 ## How to use
 
 1. Create a Twitch application [here](https://dev.twitch.tv/console/apps/create)
